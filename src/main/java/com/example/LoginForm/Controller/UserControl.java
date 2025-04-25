@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import DTOPack.UserDTO;
 import Entity.UserDetails;
 import Service.UserService;
 
@@ -19,14 +20,22 @@ import Service.UserService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/register")
+@RequestMapping("/api")
 public class UserControl {
 	@Autowired
-	UserService us;
+	UserService uo;
 	
-	@PostMapping("/adduser")
-	public ResponseEntity<String> AddData(@RequestBody UserDetails u){
-		us.datauser(u);
+	@PostMapping("/register")
+	public ResponseEntity<String> AddData(@RequestBody UserDTO u){
+		System.out.println(u);
+		UserDetails us=new UserDetails();
+		us.setFirstname(u.getFirstname());
+		us.setLastname(u.getLastname());
+		us.setEmail(u.getEmail());
+		us.setPhoneNumber(u.getPhone());
+		us.setCourse(u.getCourse());
+		us.setGender(u.getGender());
+		uo.datauser(us);
 		return ResponseEntity.ok("User added successfully")          ;
 		
 	}
